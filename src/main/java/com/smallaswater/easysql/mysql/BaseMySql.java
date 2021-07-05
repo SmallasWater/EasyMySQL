@@ -166,6 +166,21 @@ public abstract class BaseMySql {
         return false;
     }
 
+    @Deprecated
+    public boolean createTable(Connection connection, String... args) {
+        String command = "CREATE TABLE " + args[0] + "(?)engine=InnoDB default charset=utf8";
+        try {
+            ResultSet resultSet = connection.getMetaData().getTables(null, null, args[0], null);
+            if (!resultSet.next()) {
+                return getSqlManager(args[0]).runSql(command, new ChunkSqlType(1, args[1]));
+            }
+        } catch (SQLException var5) {
+            var5.printStackTrace();
+        }
+
+        return false;
+    }
+
     /**
      * 删除表
      *
@@ -174,6 +189,11 @@ public abstract class BaseMySql {
     public void deleteTable(String tableName) {
         String sql = "DROP TABLE " + tableName;
         this.getSqlDataManager("").runSql(sql);
+    }
+
+    @Deprecated
+    public void deleteField(String tableName) {
+        this.deleteTable(tableName);
     }
 
     /**
