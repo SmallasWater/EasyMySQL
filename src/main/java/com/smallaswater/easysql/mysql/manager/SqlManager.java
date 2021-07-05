@@ -20,15 +20,16 @@ public class SqlManager extends BaseMySql {
 
     public SqlManager(@NotNull Plugin plugin, @NotNull UserData data) throws MySqlLoginException {
         super(plugin, data);
-        if (connect()) {
+        if (this.connect()) {
             this.isEnable = true;
         }
     }
 
     @Deprecated
     public SqlManager(@NotNull Plugin plugin, @NotNull UserData data, String configTableName, TableType... table) throws MySqlLoginException {
-        this(plugin, data);
-        if (this.isEnable) {
+        super(plugin, data);
+        if (this.connect()) {
+            this.isEnable = true;
             if (configTableName != null && !configTableName.trim().equals("") && table.length > 0) {
                 if (this.createTable(configTableName, BaseMySql.getDefaultTable(table))) {
                     plugin.getLogger().info("创建数据表" + configTableName + "成功");
@@ -47,7 +48,7 @@ public class SqlManager extends BaseMySql {
     @Deprecated
     public SqlManager(Plugin plugin, UserData data, String configTableName) throws MySqlLoginException {
         super(plugin, data);
-        if (connect()) {
+        if (this.connect()) {
             if (createTable(configTableName, BaseMySql.getDefaultConfig())) {
                 plugin.getLogger().info("创建数据表成功");
             }
@@ -63,6 +64,5 @@ public class SqlManager extends BaseMySql {
         this.shutdown();
         this.isEnable = false;
     }
-
 
 }

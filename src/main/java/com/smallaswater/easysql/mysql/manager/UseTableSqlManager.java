@@ -36,7 +36,13 @@ public class UseTableSqlManager extends BaseMySql {
      * @return 增加一个字段
      */
     public boolean createColumn(Types types, String args) {
-        return this.createColumn(types, this.tableName, args);
+        return super.createColumn(types, this.tableName, args);
+    }
+
+    @Deprecated //对于UseTableSqlManager来说不推荐使用此方法
+    @Override
+    public boolean createColumn(Types types, String form, String args) {
+        return super.createColumn(types, form, args);
     }
 
     /**
@@ -46,11 +52,22 @@ public class UseTableSqlManager extends BaseMySql {
      * @return 删除一个字段
      */
     public boolean deleteColumn(String args) {
-        return this.deleteColumn(args, this.tableName);
+        return super.deleteColumn(args, this.tableName);
+    }
+
+    @Deprecated //对于UseTableSqlManager来说不推荐使用此方法
+    @Override
+    public boolean deleteColumn(String args, String form) {
+        return super.deleteColumn(args, form);
     }
 
     public void deleteTable() {
-        this.deleteTable(this.tableName);
+        super.deleteTable(this.tableName);
     }
 
+    @Deprecated //对于UseTableSqlManager来说不推荐使用此方法
+    @Override
+    public void deleteTable(String tableName) {
+        super.deleteTable(tableName);
+    }
 }

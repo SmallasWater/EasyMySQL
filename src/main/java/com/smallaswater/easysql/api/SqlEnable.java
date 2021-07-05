@@ -3,6 +3,7 @@ package com.smallaswater.easysql.api;
 
 import cn.nukkit.plugin.Plugin;
 import com.smallaswater.easysql.exceptions.MySqlLoginException;
+import com.smallaswater.easysql.mysql.BaseMySql;
 import com.smallaswater.easysql.mysql.manager.SqlManager;
 import com.smallaswater.easysql.mysql.utils.TableType;
 import com.smallaswater.easysql.mysql.utils.UserData;
@@ -21,30 +22,39 @@ public class SqlEnable {
 
     private final SqlManager manager;
     private final UserData data;
-    private final boolean isEnable;
 
+    public SqlEnable(@NotNull Plugin plugin, @NotNull UserData data) throws MySqlLoginException {
+        this.data = data;
+        this.manager = new SqlManager(plugin, data);
+    }
+
+    @Deprecated
     public SqlEnable(@NotNull Plugin plugin, @NotNull String tableName, UserData data, TableType... table) throws MySqlLoginException {
         this.data = data;
-        this.manager = new SqlManager(plugin, data, tableName, table);
-        this.isEnable = this.manager.isEnable();
+        this.manager = new SqlManager(plugin, data);
+        if (tableName != null && !tableName.trim().equals("") && table.length > 0) {
+            if (this.manager.createTable(tableName, BaseMySql.getDefaultTable(table))) {
+                plugin.getLogger().info("创建数据表" + tableName + "成功");
+            }
+        }
     }
 
     public boolean isEnable() {
-        return isEnable;
+        return this.manager.isEnable();
     }
 
     /**
      * 关闭服务器的时候记得执行这个
      */
     public void disable() {
-        manager.shutdown();
+        this.manager.disable();
     }
 
     public UserData getData() {
-        return data;
+        return this.data;
     }
 
     public SqlManager getManager() {
-        return manager;
+        return this.manager;
     }
 }
