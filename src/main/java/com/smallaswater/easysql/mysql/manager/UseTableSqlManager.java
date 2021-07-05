@@ -2,7 +2,6 @@ package com.smallaswater.easysql.mysql.manager;
 
 import cn.nukkit.plugin.Plugin;
 import com.smallaswater.easysql.exceptions.MySqlLoginException;
-import com.smallaswater.easysql.mysql.BaseMySql;
 import com.smallaswater.easysql.mysql.data.SqlDataManager;
 import com.smallaswater.easysql.mysql.utils.Types;
 import com.smallaswater.easysql.mysql.utils.UserData;
@@ -13,14 +12,13 @@ import lombok.Getter;
  *
  * @author SmallasWater
  */
-public class UseTableSqlManager extends BaseMySql {
+public class UseTableSqlManager extends SqlManager {
 
     @Getter
     protected String tableName;
 
     public UseTableSqlManager(Plugin plugin, UserData data, String tableName) throws MySqlLoginException {
         super(plugin, data);
-        connect();
         this.tableName = tableName;
     }
 
