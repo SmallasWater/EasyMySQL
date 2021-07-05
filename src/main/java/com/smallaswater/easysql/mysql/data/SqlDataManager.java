@@ -41,6 +41,14 @@ public class SqlDataManager {
     }
 
     /**
+     * 设置当前表
+     * @param tableName 表名
+     * */
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    /**
      * 获取当前表
      *
      * @return 表名
@@ -49,14 +57,6 @@ public class SqlDataManager {
         return tableName;
     }
 
-    /**
-     * 设置当前表
-     *
-     * @param tableName 表名
-     */
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
-    }
 
     /**
      * 限制条数的分组查询
@@ -71,6 +71,7 @@ public class SqlDataManager {
      * @param orderBy 排序条件
      * @param having  分组的判断条件
      * @param types   防SQL注入传参 1为第一个问号
+     *
      * @return 数据列表
      */
     public SqlDataList<SqlData> selectExecute(String column, String form, String where, String like, int start, int length, String groupBy, String orderBy, String having, ChunkSqlType... types) {

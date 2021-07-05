@@ -15,21 +15,22 @@ import java.util.ArrayList;
  */
 public class EasySql extends PluginBase {
 
-    private static final ArrayList<LoginPool> pools = new ArrayList<>();
+    private static ArrayList<LoginPool> pools = new ArrayList<>();
+
+    @Override
+    public void onEnable() {
+
+        this.getLogger().info("已加载 EasyMySQL 插件 v"+this.getDescription().getVersion());
+    }
 
     public static LoginPool getLoginPool(UserData data) {
         LoginPool pool = new LoginPool(data.getHost(), data.getUser(), data.getDatabase());
-        if (!pools.contains(pool)) {
+        if(!pools.contains(pool)){
             pools.add(pool);
         }
         return pools.get(pools.indexOf(pool));
     }
 
-    @Override
-    public void onEnable() {
-
-        this.getLogger().info("已加载 EasyMySQL 插件 v2.0.3");
-    }
 
     @Override
     public void onDisable() {
