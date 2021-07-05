@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * 这里是一个manager
+ * 数据库数据操作类
  *
  * @author SmallasWater
  */
@@ -40,6 +40,7 @@ public class SqlDataManager {
 
     /**
      * 设置当前表
+     *
      * @param tableName 表名
      * */
     public void setTableName(String tableName) {

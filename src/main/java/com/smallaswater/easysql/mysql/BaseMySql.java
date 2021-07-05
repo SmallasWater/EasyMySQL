@@ -53,7 +53,7 @@ public abstract class BaseMySql {
      * 连接数据库
      *
      * @return 是否链接成功
-     * @throws MySqlLoginException
+     * @throws MySqlLoginException 连接错误
      */
     protected boolean connect() throws MySqlLoginException {
         Connection connection = null;
@@ -107,6 +107,19 @@ public abstract class BaseMySql {
     }
 
     /**
+     * 获取 manager
+     */
+    @Deprecated
+    public SqlDataManager getSqlManager(String form) {
+        return this.getSqlDataManager(form);
+    }
+
+    public SqlDataManager getSqlDataManager(String form) {
+        return new SqlDataManager(this.data.getDatabase(), form, this.getConnection());
+    }
+
+
+    /**
      * 关闭数据库连接
      */
     public void shutdown() {
@@ -144,7 +157,7 @@ public abstract class BaseMySql {
         try {
             ResultSet resultSet = this.getConnection().getMetaData().getTables(null, null, args[0], null);
             if (!resultSet.next()) {
-                return getSqlManager(args[0]).runSql(command, new ChunkSqlType(1, args[1]));
+                return this.getSqlDataManager(args[0]).runSql(command, new ChunkSqlType(1, args[1]));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -160,7 +173,7 @@ public abstract class BaseMySql {
      */
     public void deleteTable(String tableName) {
         String sql = "DROP TABLE " + tableName;
-        this.getSqlManager("").runSql(sql);
+        this.getSqlDataManager("").runSql(sql);
     }
 
     /**
@@ -189,7 +202,7 @@ public abstract class BaseMySql {
      */
     public boolean createColumn(Types types, String form, String args) {
         String command = "ALTER TABLE " + form + " ADD " + args + " " + types.toString();
-        return this.getSqlManager(form).runSql(command);
+        return this.getSqlDataManager(form).runSql(command);
     }
 
     /**
@@ -201,14 +214,7 @@ public abstract class BaseMySql {
      */
     public boolean deleteColumn(String args, String form) {
         String command = "ALTER TABLE " + form + " DROP ?";
-        return this.getSqlManager(form).runSql(command, new ChunkSqlType(1, args));
-    }
-
-    /**
-     * 获取 manager
-     */
-    public SqlDataManager getSqlManager(String form) {
-        return new SqlDataManager(this.data.getDatabase(), form, this.getConnection());
+        return this.getSqlDataManager(form).runSql(command, new ChunkSqlType(1, args));
     }
 
     /**

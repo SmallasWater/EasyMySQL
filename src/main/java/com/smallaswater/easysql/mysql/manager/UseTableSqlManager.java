@@ -22,8 +22,13 @@ public class UseTableSqlManager extends SqlManager {
         this.tableName = tableName;
     }
 
+    @Deprecated
     public SqlDataManager getSqlManager() {
-        return super.getSqlManager(this.tableName);
+        return super.getSqlDataManager(this.tableName);
+    }
+
+    public SqlDataManager getSqlDataManager() {
+        return super.getSqlDataManager(this.tableName);
     }
 
     /**
