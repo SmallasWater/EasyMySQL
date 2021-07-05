@@ -212,6 +212,11 @@ public abstract class BaseMySql {
         }
     }
 
+    @Deprecated
+    public boolean isColumn(String table, String column) {
+        return this.isExistColumn(table, column);
+    }
+
     /**
      * 给表增加字段
      *
