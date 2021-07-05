@@ -6,6 +6,7 @@ import com.smallaswater.easysql.exceptions.MySqlLoginException;
 import com.smallaswater.easysql.mysql.manager.SqlManager;
 import com.smallaswater.easysql.mysql.utils.TableType;
 import com.smallaswater.easysql.mysql.utils.UserData;
+import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -22,9 +23,9 @@ public class SqlEnable {
     private final UserData data;
     private final boolean isEnable;
 
-    public SqlEnable(Plugin plugin, String tableName, UserData data, TableType... table) throws MySqlLoginException {
+    public SqlEnable(@NotNull Plugin plugin, @NotNull String tableName, UserData data, TableType... table) throws MySqlLoginException {
         this.data = data;
-        this.manager = new SqlManager(plugin, tableName, data, table);
+        this.manager = new SqlManager(plugin, data, tableName, table);
         this.isEnable = this.manager.isEnable();
     }
 

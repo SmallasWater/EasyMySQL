@@ -1,7 +1,6 @@
 package com.smallaswater.easysql.mysql.data;
 
 
-import com.smallaswater.easysql.mysql.utils.AbstractOperation;
 import com.smallaswater.easysql.mysql.utils.ChunkSqlType;
 import com.smallaswater.easysql.mysql.utils.MySqlFunctions;
 
@@ -21,12 +20,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class SqlDataManager {
 
-
     private static final LinkedBlockingQueue<Runnable> QUEUE = new LinkedBlockingQueue<>(5);
 
     private static final ThreadPoolExecutor THREAD_POOL = new ThreadPoolExecutor(5, 20, 60, TimeUnit.SECONDS, QUEUE, new ThreadPoolExecutor.AbortPolicy());
 
-    private final AbstractOperation manager;
+    private final Connection connection;
 
     private final String database;
 
@@ -34,9 +32,9 @@ public class SqlDataManager {
 
     private PreparedStatement preparedStatement;
 
-    public SqlDataManager(String database, String tableName, AbstractOperation manager) {
+    public SqlDataManager(String database, String tableName, Connection connection) {
         this.tableName = tableName;
-        this.manager = manager;
+        this.connection = connection;
         this.database = database;
     }
 
@@ -166,7 +164,7 @@ public class SqlDataManager {
      */
     public SqlDataList<SqlData> selectExecute(String commands, ChunkSqlType... types) {
         SqlDataList<SqlData> objects = new SqlDataList<>(commands, types);
-        Connection connection = manager.getConnection();
+        Connection connection = this.connection;
         try {
             this.preparedStatement = connection.prepareStatement(commands);
             if (types.length > 0) {
@@ -194,7 +192,6 @@ public class SqlDataManager {
 
         } finally {
             try {
-//                connection.close();
                 if (this.preparedStatement != null) {
                     this.preparedStatement.close();
                 }
@@ -299,7 +296,7 @@ public class SqlDataManager {
      * @return 是否执行成功
      */
     public boolean runSql(String sql, ChunkSqlType... value) {
-        Connection connection = manager.getConnection();
+        Connection connection = this.connection;
         try {
             this.preparedStatement = connection.prepareStatement(sql);
             for (ChunkSqlType type : value) {
