@@ -29,7 +29,7 @@ public class SqlEnable {
     }
 
     @Deprecated
-    public SqlEnable(@NotNull Plugin plugin, @NotNull String tableName, UserData data, TableType... table) throws MySqlLoginException {
+    public SqlEnable(@NotNull Plugin plugin, String tableName, UserData data, TableType... table) throws MySqlLoginException {
         this.data = data;
         this.manager = new SqlManager(plugin, data);
         if (tableName != null && !tableName.trim().equals("") && table.length > 0) {
