@@ -42,7 +42,8 @@ public class SqlManager extends BaseMySql {
     /**
      * 配置专用
      *
-     * @param date 用户配置
+     * @param plugin 插件
+     * @param data 用户配置
      * @param configTableName 数据库表名
      */
     public SqlManager(Plugin plugin, UserData data, String configTableName) throws MySqlLoginException {
