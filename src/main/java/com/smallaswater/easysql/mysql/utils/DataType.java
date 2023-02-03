@@ -42,6 +42,11 @@ public class DataType {
      */
     private static final DataType TEXT = new DataType("text", 1, "not null");
 
+    /**
+     * nk中的玩家uuid
+     */
+    private static final DataType UUID = CHAR.clone().setSize(36);
+
     public static DataType getCHAR() {
         return CHAR.clone();
     }
@@ -76,6 +81,10 @@ public class DataType {
 
     public static DataType getTEXT() {
         return TEXT.clone();
+    }
+
+    public static DataType getUUID() {
+        return UUID.clone();
     }
 
     private String sql;
