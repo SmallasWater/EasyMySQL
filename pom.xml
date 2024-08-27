@@ -6,7 +6,7 @@
 
     <groupId>com.smallaswater.easysql</groupId>
     <artifactId>EasyMySQL</artifactId>
-    <version>3.0.7<!-- -SNAPSHOT--></version>
+    <version>3.1.0-SNAPSHOT</version>
 
     <name>EasyMySQL</name>
     <description>EasyMySQL -- MySQL tool for Nukkit</description>
@@ -74,6 +74,10 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>repo-lanink-cn</id>
+            <url>https://repo.lanink.cn/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <distributionManagement>
@@ -101,10 +105,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.32</version>
-            <scope>compile</scope>
+            <groupId>com.smallaswater.easysqlx</groupId>
+            <artifactId>EasySQLX</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -117,12 +121,6 @@
             <artifactId>nukkit</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.29.1-GA</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
